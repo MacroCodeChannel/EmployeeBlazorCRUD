@@ -1,0 +1,65 @@
+﻿@page "/AddEmployee"
+@using EmployeeBlazorCRUD.Data
+@using EmployeeBlazorCRUD.Models
+@inject EmployeeService employeeService
+@inject NavigationManager NavigationManager
+
+
+<h3>Add New Employee</h3>
+<hr />
+
+<form>
+    <div class="row">
+        <div class="col-md-8">
+        <div class="form-group">
+            <label for="FirstName" class="control-label"> First Name</label>
+                <input for="FirstName" class="form-control"  @bind="@obj.FirstName" />
+        </div>
+            <div class="form-group">
+                <label for="MiddleName" class="control-label"> Middle Name</label>
+                <input for="MiddleName" class="form-control" @bind="@obj.MiddleName" />
+            </div>
+             <div class="form-group">
+                <label for="LastName" class="control-label"> Last Name</label>
+                <input for="LastName" class="form-control" @bind="@obj.LastName" />
+            </div>
+            <div class="form-group">
+                <label for="Gender" class="control-label"> Gender</label>
+               <select @bind="@obj.Gender" class="form-control">
+                    <option value="">-Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="City" class="control-label"> City</label>
+                <input for="City" class="form-control" @bind="@obj.City" />
+            </div>
+            <div class="form-group">
+                <label for="Designation" class="control-label"> Designation</label>
+                <input for="Designation" class="form-control" @bind="@obj.Designation" />
+            </div>
+        </div>
+    </div>
+     <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <input type="button" class="btn btn-primary" @onclick="@CreateEmployee" value="Save"/>
+                <input type="button" class="btn btn-primary" @onclick="@Cancel" value="Cancel"/>
+            </div>
+        </div>
+    </div>
+</form>
+
+@code {
+    Employee obj = new Employee();
+    protected async void CreateEmployee()
+    {
+        await employeeService.InsertEmployee(obj);
+        NavigationManager.NavigateTo("EmployeesList");
+    }
+    void Cancel()
+    {
+        NavigationManager.NavigateTo("EmployeesList");
+    }
+}
